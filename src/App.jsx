@@ -16,7 +16,6 @@ import { translations } from './data/localization';
 
 export default function App() {
   const [currentView, setCurrentView] = useState('home');
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [lang, setLang] = useState(() => localStorage.getItem('lang') || 'en');
   
   const [savedSchemes, setSavedSchemes] = useState(() => {
@@ -126,11 +125,11 @@ export default function App() {
     }
   };
 
-  // Sync theme to DOM
+  // Force light theme
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('theme', 'light');
+  }, []);
 
   // Sync language
   useEffect(() => {
@@ -146,10 +145,6 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('submittedApplications', JSON.stringify(applications));
   }, [applications]);
-
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
-  };
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
@@ -259,8 +254,6 @@ export default function App() {
       <Header 
         currentView={currentView} 
         setCurrentView={setCurrentView} 
-        theme={theme}
-        toggleTheme={toggleTheme}
         savedCount={savedSchemes.length}
         lang={lang}
         setLang={handleLangChange}
@@ -507,7 +500,7 @@ export default function App() {
         /* Toast Notifications */
         .toast-notification {
           position: fixed;
-          bottom: 2rem;
+          bottom: 6rem;
           right: 2rem;
           background: var(--bg-secondary);
           border-left: 5px solid var(--emerald);

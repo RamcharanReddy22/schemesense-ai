@@ -268,7 +268,7 @@ export default function CatalogView({
       {/* Scheme Type */}
       <div className="filter-group">
         <label className="filter-group-label">{t.filterType}</label>
-        <div className="filter-pill-grid">
+        <div className="filter-options-stack">
           {[
             { key: 'All', label: 'All' },
             { key: 'Central', label: t.centralSchemesOnly },
@@ -276,7 +276,7 @@ export default function CatalogView({
           ].map(item => (
             <button
               key={item.key}
-              className={`filter-pill ${selectedType === item.key ? 'active' : ''}`}
+              className={`filter-chip ${selectedType === item.key ? 'active' : ''}`}
               onClick={() => setSelectedType(item.key)}
             >
               {item.label}
@@ -288,16 +288,15 @@ export default function CatalogView({
       {/* Categories */}
       <div className="filter-group">
         <label className="filter-group-label">{t.filterCategory}</label>
-        <div className="filter-checkbox-list">
+        <div className="filter-options-stack">
           {CATEGORIES.map(cat => (
-            <label key={cat} className="checkbox-label">
-              <input 
-                type="checkbox"
-                checked={selectedCategories.includes(cat)}
-                onChange={() => handleCategoryChange(cat)}
-              />
-              <span>{getCategoryName(cat)}</span>
-            </label>
+            <button 
+              key={cat}
+              className={`filter-chip ${selectedCategories.includes(cat) ? 'active' : ''}`}
+              onClick={() => handleCategoryChange(cat)}
+            >
+              {getCategoryName(cat)}
+            </button>
           ))}
         </div>
       </div>
@@ -305,7 +304,7 @@ export default function CatalogView({
       {/* Gender */}
       <div className="filter-group">
         <label className="filter-group-label">{t.genderLabel}</label>
-        <div className="filter-pill-grid">
+        <div className="filter-options-stack">
           {[
             { key: 'All', label: 'All' },
             { key: 'Male', label: t.genderMale },
@@ -314,7 +313,7 @@ export default function CatalogView({
           ].map(item => (
             <button
               key={item.key}
-              className={`filter-pill ${selectedGender === item.key ? 'active' : ''}`}
+              className={`filter-chip ${selectedGender === item.key ? 'active' : ''}`}
               onClick={() => setSelectedGender(item.key)}
             >
               {item.label}
@@ -398,8 +397,8 @@ export default function CatalogView({
 
         {/* Schemes List Area */}
         <main className="catalog-main-content">
-          <div className="main-controls-bar">
-            <div className="catalog-search-wrapper">
+          <div className="catalog-search-sort-bar">
+            <div className="catalog-search-input-wrapper">
               <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="search-icon-inside">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -425,10 +424,10 @@ export default function CatalogView({
                 {isListening && <span className="listening-pulse"></span>}
               </button>
             </div>
-            <div className="sort-wrapper">
+            <div className="catalog-sort-wrapper">
               <span className="sort-label">{t.sortBy}:</span>
               <select 
-                className="form-control sort-select"
+                className="form-control catalog-sort-select"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
               >
@@ -500,73 +499,57 @@ export default function CatalogView({
 
           {/* Cards List */}
           {sortedSchemes.length > 0 ? (
-            <div className="schemes-cards-list">
+            <div className="schemes-grid">
               {sortedSchemes.map(scheme => (
-                <div key={scheme.id} className="scheme-catalog-card" onClick={() => onSelectScheme(scheme)}>
-                  <div className="scheme-card-header">
-                    <div className="scheme-card-meta" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <input 
-                        type="checkbox" 
-                        checked={compareList.some(s => s.id === scheme.id)} 
-                        onChange={() => {}} // React controlled component warning fix
-                        onClick={(e) => toggleCompare(scheme, e)}
-                        title="Add to compare"
-                        style={{ width: '16px', height: '16px', accentColor: 'var(--saffron)', cursor: 'pointer' }}
-                      />
-                      <span className="badge badge-primary">{getCategoryName(scheme.category)}</span>
-                      <span className={`badge ${scheme.type === 'Central' ? 'badge-saffron' : 'badge-emerald'}`}>
-                        {scheme.type === 'Central' ? t.centralSchemesOnly : t.stateSchemesOnly}
-                      </span>
-                      {scheme.deadline && (
-                        <span className="badge" style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
-                          ⏳ Closing Soon!
-                        </span>
-                      )}
+                <div key={scheme.id} className="scheme-card" onClick={() => onSelectScheme(scheme)}>
+                  <div className="card-header-accent"></div>
+                  <div className="scheme-card-body">
+                    <div className="scheme-card-badges">
+                      <span className="card-badge cat">{getCategoryName(scheme.category)}</span>
+                      <span className="card-badge type">{scheme.type === 'Central' ? t.centralSchemesOnly : t.stateSchemesOnly}</span>
+                      {scheme.deadline && <span className="card-badge" style={{color:'#D93025', borderColor:'#FCE8E6', background:'#FCE8E6'}}>⏳ Closing Soon!</span>}
                     </div>
-                    {/* Bookmark Toggle */}
-                    <button 
-                      className={`btn-bookmark ${isSaved(scheme.id) ? 'active' : ''}`}
-                      onClick={(e) => {
-                        e.stopPropagation(); // Avoid opening the modal
-                        toggleSaveScheme(scheme);
-                      }}
-                      aria-label="Save Scheme"
-                    >
-                      <svg width="20" height="20" fill={isSaved(scheme.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                      </svg>
-                    </button>
-                  </div>
 
-                  <h3 className="scheme-card-title">{scheme[`title_${lang}`] || scheme.title}</h3>
-                  <p className="scheme-card-desc">{scheme[`description_${lang}`] || scheme.description}</p>
-                  
-                  <div className="scheme-card-footer">
-                    <span className="card-ministry-text">{scheme[`ministry_${lang}`] || scheme.ministry}</span>
-                    <div className="card-actions-group">
+                    <h3 className="scheme-card-title">{scheme[`title_${lang}`] || scheme.title}</h3>
+                    <p className="scheme-card-desc">{scheme[`description_${lang}`] || scheme.description}</p>
+                    
+                    <div className="scheme-card-meta">
+                      <div className="meta-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span>{scheme[`ministry_${lang}`] || scheme.ministry}</span>
+                      </div>
+                    </div>
+
+                    <div className="scheme-card-actions">
                       <button 
-                        className="btn btn-secondary btn-sm-card"
+                        className="btn-details"
                         onClick={(e) => {
                           e.stopPropagation();
-                          const message = `Check out this government scheme: ${scheme.title}%0A%0A${scheme.description}%0A%0AApply here: https://schemesense-ai.netlify.app`;
-                          window.open(`https://wa.me/?text=${message}`, '_blank');
+                          onSelectScheme(scheme);
                         }}
-                        style={{ padding: '0.4rem', border: '1px solid #25D366', color: '#25D366', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                        title="Share on WhatsApp"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        {lang === 'hi' ? 'विवरण देखें' : lang === 'te' ? 'వివరాలు' : 'View details'}
                       </button>
-                      <button className="btn btn-secondary btn-sm-card">
-                        {lang === 'hi' ? 'विवरण देखें' : lang === 'te' ? 'వివరాలు చూడండి' : 'View details'}
+                      <button 
+                        className={`btn-save-icon ${isSaved(scheme.id) ? 'saved' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSaveScheme(scheme);
+                        }}
+                        title="Save Scheme"
+                      >
+                        <svg width="18" height="18" fill={isSaved(scheme.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
                       </button>
                       <a 
                         href={scheme.officialUrl} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="btn btn-primary btn-sm-card btn-direct-apply-card"
+                        className="btn-save-icon"
+                        style={{background: '#003366', color: '#fff', borderColor: '#003366'}}
                         onClick={(e) => e.stopPropagation()}
+                        title="Apply Direct ↗"
                       >
-                        {lang === 'hi' ? 'सीधे आवेदन करें ↗' : lang === 'te' ? 'నేరుగా దరఖాస్తు ↗' : 'Apply Direct ↗'}
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
                       </a>
                     </div>
                   </div>

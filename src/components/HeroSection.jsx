@@ -325,7 +325,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
 
         {/* Quick Eligibility Matcher Widget - Now placed below centrally */}
         <div className="hero-matcher-wrapper">
-          <div className="quick-matcher-panel glass-panel animate-fade-up" style={{animationDelay: '0.2s'}}>
+          <div className="quick-matcher-panel  animate-fade-up" style={{animationDelay: '0.2s'}}>
             <div className="matcher-header">
               <h3>{t.quickMatcherTitle}</h3>
               <p>{t.quickMatcherDesc}</p>
@@ -488,7 +488,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
 
       <style>{`
         .hero-container-section {
-          background: linear-gradient(135deg, rgba(15, 23, 42, 0.02) 0%, rgba(37, 99, 235, 0.03) 100%);
+          background: var(--primary) 0%, rgba(37, 99, 235, 0.03) 100%);
           padding: 4.5rem 0 3rem 0;
           border-bottom: 1px solid var(--border-color);
         }
@@ -528,7 +528,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
           border-radius: 30px;
           font-size: 0.78rem;
           font-weight: 700;
-          color: var(--text-secondary);
+          color: rgba(255, 255, 255, 0.85);
           box-shadow: var(--shadow-sm);
         }
 
@@ -563,7 +563,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
         }
 
         .gradient-text-saffron {
-          background: linear-gradient(90deg, var(--saffron) 0%, #ea580c 100%);
+          background: var(--primary) 0%, #ea580c 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
@@ -571,7 +571,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
         .hero-subtitle {
           font-size: 1.15rem;
           line-height: 1.6;
-          color: var(--text-secondary);
+          color: rgba(255, 255, 255, 0.85);
           margin-bottom: 2rem;
           max-width: 580px;
         }
@@ -674,7 +674,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
           background: var(--bg-tertiary);
           padding: 0.15rem 0.5rem;
           border-radius: 4px;
-          color: var(--text-secondary);
+          color: rgba(255, 255, 255, 0.85);
         }
 
         .hero-actions-container {
@@ -737,7 +737,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
 
         .matcher-header p {
           font-size: 0.85rem;
-          color: var(--text-secondary);
+          color: rgba(255, 255, 255, 0.85);
           margin-bottom: 1.75rem;
         }
 
@@ -758,7 +758,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
           justify-content: space-between;
           font-size: 0.85rem;
           font-weight: 700;
-          color: var(--text-secondary);
+          color: rgba(255, 255, 255, 0.85);
         }
 
         .age-badge {
@@ -791,7 +791,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
           border-radius: var(--radius-sm);
           font-size: 0.82rem;
           font-weight: 700;
-          color: var(--text-secondary);
+          color: rgba(255, 255, 255, 0.85);
           text-align: center;
           cursor: pointer;
           transition: all var(--transition-fast);
@@ -941,7 +941,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
 
         .quick-results-desc {
           font-size: 0.9rem;
-          color: var(--text-secondary);
+          color: rgba(255, 255, 255, 0.85);
           margin-bottom: 1.25rem;
         }
 
@@ -979,7 +979,7 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
 
         .quick-scheme-item-row p {
           font-size: 0.85rem;
-          color: var(--text-secondary);
+          color: rgba(255, 255, 255, 0.85);
           line-height: 1.4;
         }
 

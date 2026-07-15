@@ -18,12 +18,11 @@ export default function Footer({ setCurrentView, lang = 'en' }) {
               <circle cx="32" cy="32" r="22" stroke="rgba(255,255,255,0.3)" strokeWidth="1" fill="none" strokeDasharray="4 2"/>
               <text x="32" y="27" textAnchor="middle" fontSize="7" fontWeight="700" fill="#fff" fontFamily="Arial">SCHEME</text>
               <text x="32" y="37" textAnchor="middle" fontSize="7" fontWeight="700" fill="#fff" fontFamily="Arial">SENSE</text>
-              <circle cx="32" cy="32" r="2.5" fill="#FF9933"/>
             </svg>
             <div>
-              <div className="gov-footer-portal-name">SchemeSense Portal</div>
-              <div className="gov-footer-dept">Ministry of Electronics &amp; Information Technology</div>
-              <div className="gov-footer-dept">Government of India (Prototype)</div>
+              <div className="gov-footer-title">SchemeSense Portal</div>
+              <div className="gov-footer-dept">Team six_seven</div>
+              <div className="gov-footer-gov">Government of India (Prototype)</div>
             </div>
           </div>
 
@@ -65,7 +64,6 @@ export default function Footer({ setCurrentView, lang = 'en' }) {
               <h4 className="gov-footer-col-title">Help &amp; Support</h4>
               <ul>
                 <li><span>Helpline: 1800-XXX-XXXX</span></li>
-                <li><span>Mon–Sat, 9AM–6PM</span></li>
                 <li><a href="#" onClick={e => e.preventDefault()}>Contact Us</a></li>
                 <li><a href="#" onClick={e => e.preventDefault()}>FAQ</a></li>
                 <li><a href="#" onClick={e => e.preventDefault()}>Feedback</a></li>
@@ -111,7 +109,7 @@ export default function Footer({ setCurrentView, lang = 'en' }) {
             © {year} SchemeSense Portal. Content Owned &amp; Maintained by Ministry of Electronics &amp; Information Technology (Prototype).
           </p>
           <p className="gov-footer-credits">
-            Website conceptualized and developed by <strong>Team SchemeSense</strong> for <strong>Smart India Hackathon</strong>. &nbsp;
+            Website conceptualized and developed by <strong>Team six_seven</strong> for <strong>HackathonZ</strong>. &nbsp;
             <span className="gov-footer-disclaimer-inline">This is a demonstration prototype, not an official government service.</span>
           </p>
           <div className="gov-footer-badges">

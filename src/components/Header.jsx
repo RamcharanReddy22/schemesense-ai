@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { translations } from '../data/localization';
 
-export default function Header({ currentView, setCurrentView, theme, toggleTheme, savedCount, lang, setLang }) {
+export default function Header({ currentView, setCurrentView, savedCount, lang, setLang }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [fontSize, setFontSize] = useState('normal');
 
@@ -43,12 +43,12 @@ export default function Header({ currentView, setCurrentView, theme, toggleTheme
               <text x="32" y="27" textAnchor="middle" fontSize="7" fontWeight="700" fill="#003366" fontFamily="Arial">SCHEME</text>
               <text x="32" y="37" textAnchor="middle" fontSize="7" fontWeight="700" fill="#003366" fontFamily="Arial">SENSE</text>
               <text x="32" y="47" textAnchor="middle" fontSize="5" fill="#777" fontFamily="Arial">PORTAL</text>
-              <circle cx="32" cy="32" r="3" fill="#FF9933"/>
+              
             </svg>
 
             <div className="gov-portal-info">
               <div className="gov-portal-name">SchemeSense <span className="gov-portal-name-hi">| सरकारी योजना पोर्टल</span></div>
-              <div className="gov-portal-dept">Ministry of Electronics &amp; Information Technology, Govt. of India</div>
+              <div className="gov-portal-dept">Team six_seven</div>
               <div className="gov-portal-tagline">Welfare Scheme Aggregation &amp; Eligibility Assessment System</div>
             </div>
           </div>
@@ -76,13 +76,7 @@ export default function Header({ currentView, setCurrentView, theme, toggleTheme
                 <button className={`gov-a11y-btn ${fontSize==='small'?'active':''}`} onClick={() => handleFontSize('small')} title="Decrease font size">A-</button>
                 <button className={`gov-a11y-btn ${fontSize==='normal'?'active':''}`} onClick={() => handleFontSize('normal')} title="Normal font size">A</button>
                 <button className={`gov-a11y-btn gov-a11y-btn--lg ${fontSize==='large'?'active':''}`} onClick={() => handleFontSize('large')} title="Increase font size">A+</button>
-                <button className="gov-a11y-btn gov-contrast-btn" onClick={toggleTheme} title="Toggle high contrast">
-                  {theme === 'light' ? (
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                  ) : (
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-                  )}
-                </button>
+
               </div>
             </div>
           </div>
@@ -93,7 +87,7 @@ export default function Header({ currentView, setCurrentView, theme, toggleTheme
       <div className="trust-banner">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{flexShrink:0}}><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
         <span>
-          <strong>Prototype — SchemeSense Hackathon Submission.</strong>&nbsp;
+          <strong>Prototype — Hackathonz.</strong>&nbsp;
           This portal is a demonstration prototype developed for educational and research purposes. It is <strong>not</strong> an official Government of India service. No data submitted here is processed by any government department.
         </span>
       </div>

@@ -123,7 +123,7 @@ export default function AnalyticsDashboard({ schemes, lang, onSelectState }) {
       {/* Visual Graphs Section */}
       <div className="charts-flex-grid">
         {/* Sector Allocation Bar Chart */}
-        <div className="chart-panel glass-panel">
+        <div className="chart-panel ">
           <h3 className="chart-panel-title">Sectoral Funding Allocations (₹ in Crores)</h3>
           <p className="chart-desc">Comparative breakdown of budgeted capital support per focus sector.</p>
           <div className="bar-chart-container">
@@ -149,7 +149,7 @@ export default function AnalyticsDashboard({ schemes, lang, onSelectState }) {
         </div>
 
         {/* Central vs State Donut Chart */}
-        <div className="chart-panel glass-panel donut-panel">
+        <div className="chart-panel  donut-panel">
           <h3 className="chart-panel-title">Scheme Origin Ratio</h3>
           <p className="chart-desc">Ratio between Central Government initiatives and State Government-run extensions.</p>
           
@@ -182,7 +182,7 @@ export default function AnalyticsDashboard({ schemes, lang, onSelectState }) {
       </div>
 
       {/* State-wise Distribution Table */}
-      <div className="state-distribution-panel glass-panel">
+      <div className="state-distribution-panel ">
         <h3 className="chart-panel-title">State Specific Welfare Coverage</h3>
         <p className="chart-desc">Local schemes tailored to specific geographic conditions and state policies.</p>
         <div className="states-grid-cards">
@@ -349,7 +349,7 @@ export default function AnalyticsDashboard({ schemes, lang, onSelectState }) {
 
         .bar-fill {
           height: 100%;
-          background: linear-gradient(90deg, var(--primary) 0%, #60a5fa 100%);
+          background: var(--primary);
           border-radius: 5px;
           animation: barGrow 1s cubic-bezier(0.4, 0, 0.2, 1);
           transform-origin: left;

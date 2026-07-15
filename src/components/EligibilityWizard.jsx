@@ -180,7 +180,7 @@ export default function EligibilityWizard({ schemes, onSelectScheme, onResetWiza
       <div className="wizard-split-grid">
         
         {/* Left Side: Wizard Form Panel */}
-        <div className="wizard-card glass-panel">
+        <div className="wizard-card ">
           
           {/* Progress Tracker */}
           {step <= totalSteps && (
@@ -527,7 +527,7 @@ export default function EligibilityWizard({ schemes, onSelectScheme, onResetWiza
         </div>
 
         {/* Right Side: Live Qualifying Schemes Sidebar */}
-        <div className="wizard-live-sidebar glass-panel">
+        <div className="wizard-live-sidebar ">
           <div className="sidebar-header">
             <h3>Matching Live Checklist</h3>
             <span className="live-counter-bubble">{matchedSchemes.length}</span>
@@ -563,7 +563,7 @@ export default function EligibilityWizard({ schemes, onSelectScheme, onResetWiza
         }
 
         .benefits-calculator-card {
-          background: linear-gradient(135deg, var(--saffron) 0%, #ff8c42 100%);
+          background: var(--primary) 0%, #ff8c42 100%);
           border-radius: var(--radius-lg);
           padding: 1.5rem 2rem;
           margin: 2rem 0;
@@ -735,6 +735,8 @@ export default function EligibilityWizard({ schemes, onSelectScheme, onResetWiza
           gap: 0.5rem;
           cursor: pointer;
           transition: all var(--transition-fast);
+          color: var(--text-primary);
+          font-weight: 500;
         }
 
         .choice-card-button:hover {

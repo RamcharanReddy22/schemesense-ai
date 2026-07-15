@@ -56,11 +56,18 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
     }]);
 
     try {
+      let backendQuery = userText;
+      const lower = userText.toLowerCase();
+      if (lower.includes('किसान') || lower.includes('రైతు')) backendQuery += ' farmer agriculture';
+      if (lower.includes('छात्र') || lower.includes('विद्यार्थी') || lower.includes('విద్యార్థి')) backendQuery += ' scholarship education student';
+      if (lower.includes('ऋण') || lower.includes('व्यवसाय') || lower.includes('వ్యాపారం')) backendQuery += ' business loan';
+      if (lower.includes('पात्र') || lower.includes('అర్హత')) backendQuery += ' am i eligible for pm kisan';
+
       const API_URL = import.meta.env.VITE_RAG_API_URL || 'http://localhost:8000';
       const response = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: userText, lang: lang, use_uploaded_docs: useDocMode && uploadedFiles.length > 0 })
+        body: JSON.stringify({ query: backendQuery, lang: lang, use_uploaded_docs: useDocMode && uploadedFiles.length > 0 })
       });
 
       if (!response.ok) {
@@ -212,13 +219,13 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
     }
 
     // Category mapping
-    if (text.includes('scholarship') || text.includes('student') || text.includes('study') || text.includes('education') || text.includes('college') || text.includes('school')) {
+    if (text.includes('scholarship') || text.includes('student') || text.includes('study') || text.includes('education') || text.includes('college') || text.includes('school') || text.includes('छात्र') || text.includes('विद्यार्थी') || text.includes('విద్యార్థి') || text.includes('చదువు')) {
       matchedCategory = 'Education & Learning';
-    } else if (text.includes('farmer') || text.includes('agriculture') || text.includes('crop') || text.includes('cultivat') || text.includes('kisan') || text.includes('rythu')) {
+    } else if (text.includes('farmer') || text.includes('agriculture') || text.includes('crop') || text.includes('cultivat') || text.includes('kisan') || text.includes('rythu') || text.includes('किसान') || text.includes('खेती') || text.includes('రైతు') || text.includes('వ్యవసాయం')) {
       matchedCategory = 'Agriculture, Rural & Environment';
-    } else if (text.includes('business') || text.includes('entrepreneur') || text.includes('loan') || text.includes('mudra') || text.includes('shop') || text.includes('startup') || text.includes('trade')) {
+    } else if (text.includes('business') || text.includes('entrepreneur') || text.includes('loan') || text.includes('mudra') || text.includes('shop') || text.includes('startup') || text.includes('trade') || text.includes('ऋण') || text.includes('व्यवसाय') || text.includes('వ్యాపారం') || text.includes('రుణం')) {
       matchedCategory = 'Business & Entrepreneurship';
-    } else if (text.includes('health') || text.includes('hospital') || text.includes('insurance') || text.includes('medical') || text.includes('treatment') || text.includes('ayushman') || text.includes('pregnancy') || text.includes('janani')) {
+    } else if (text.includes('health') || text.includes('hospital') || text.includes('insurance') || text.includes('medical') || text.includes('treatment') || text.includes('ayushman') || text.includes('pregnancy') || text.includes('janani') || text.includes('स्वास्थ्य') || text.includes('अस्पताल') || text.includes('ఆరోగ్యం') || text.includes('ఆసుపత్రి')) {
       matchedCategory = 'Health & Wellness';
     } else if (text.includes('girl') || text.includes('daughter') || text.includes('woman') || text.includes('women') || text.includes('female') || text.includes('mother') || text.includes('sukanya') || text.includes('kanya') || text.includes('maternal')) {
       matchedCategory = 'Women and Child';
@@ -319,7 +326,7 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
 
       {/* Chat Window Panel */}
       {isOpen && (
-        <div className="chat-window glass-panel view-enter">
+        <div className="chat-window  view-enter">
           
           {/* Header */}
           <div className="chat-header">
