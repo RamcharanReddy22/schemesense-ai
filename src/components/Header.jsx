@@ -15,11 +15,9 @@ export default function Header({ currentView, setCurrentView, theme, toggleTheme
     <header className="header-nav">
       <div className="container header-container">
         <div className="logo-section" onClick={() => handleNavClick('home')}>
-          {/* Clean, minimal geometric logo mark */}
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="logo-svg">
-            <rect x="2" y="2" width="28" height="28" rx="6" fill="var(--primary)" />
-            <path d="M9 16h14M16 9v14" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-            <circle cx="16" cy="16" r="3" fill="var(--saffron)" />
+            <rect x="1" y="1" width="30" height="30" rx="3" fill="var(--saffron)" stroke="var(--text-primary)" strokeWidth="2"/>
+            <text x="16" y="22" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="900" fontFamily="serif">S</text>
           </svg>
           <div className="logo-text">
             <span className="logo-title">Scheme<span style={{ color: 'var(--saffron)' }}>Sense</span></span>
@@ -153,32 +151,30 @@ export default function Header({ currentView, setCurrentView, theme, toggleTheme
           top: 0;
           z-index: 100;
           background: var(--bg-secondary);
-          border-bottom: 1px solid var(--border-color);
+          border-bottom: 2px solid var(--border-color);
           transition: background-color var(--transition-normal);
-          backdrop-filter: blur(12px);
         }
 
         .header-container {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 70px;
+          height: 64px;
         }
 
         .logo-section {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
+          gap: 0.6rem;
           cursor: pointer;
         }
 
         .logo-svg {
-          animation: spin-slow 20s linear infinite;
+          transition: transform var(--transition-fast);
         }
 
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+        .logo-section:hover .logo-svg {
+          transform: rotate(-3deg);
         }
 
         .logo-text {
@@ -189,50 +185,44 @@ export default function Header({ currentView, setCurrentView, theme, toggleTheme
         }
 
         .logo-title {
-          font-family: var(--font-heading);
-          font-size: 1.35rem;
-          font-weight: 800;
-          letter-spacing: -0.5px;
+          font-family: var(--font-display);
+          font-size: 1.3rem;
+          font-weight: 900;
+          letter-spacing: -0.03em;
           color: var(--text-primary);
-        }
-
-        .logo-subtitle {
-          font-size: 0.72rem;
-          color: var(--text-muted);
-          font-weight: 600;
-          letter-spacing: 0.2px;
-          text-transform: uppercase;
         }
 
         .desktop-nav {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.25rem;
         }
 
         @media (max-width: 900px) {
-          .desktop-nav {
-            display: none;
-          }
+          .desktop-nav { display: none; }
         }
 
         .nav-link {
-          font-size: 0.9rem;
+          font-size: 0.875rem;
           font-weight: 600;
           color: var(--text-secondary);
-          padding: 0.5rem 1rem;
-          border-radius: var(--radius-sm);
+          padding: 0.4rem 0.85rem;
+          border-radius: 3px;
           position: relative;
+          border-bottom: 2px solid transparent;
+          font-family: var(--font-body);
+          min-height: unset;
         }
 
         .nav-link:hover {
-          color: var(--primary);
-          background: var(--primary-light);
+          color: var(--text-primary);
+          background: var(--bg-tertiary);
         }
 
         .nav-link.active {
-          color: var(--primary);
-          background: var(--primary-light);
+          color: var(--saffron);
+          border-bottom: 2px solid var(--saffron);
+          background: none;
         }
 
         .saved-btn {
@@ -244,136 +234,135 @@ export default function Header({ currentView, setCurrentView, theme, toggleTheme
         .saved-badge {
           background: var(--saffron);
           color: white;
-          font-size: 0.7rem;
+          font-size: 0.68rem;
           font-weight: 700;
           min-width: 18px;
           height: 18px;
-          border-radius: 9px;
+          border-radius: 2px;
+          border: 1px solid var(--text-primary);
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 0 4px;
+          padding: 0 3px;
         }
 
         .header-actions {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
+          gap: 0.6rem;
         }
 
         .lang-select-box {
           background: var(--bg-tertiary);
-          border: 1px solid var(--border-color);
-          padding: 0.35rem 0.5rem;
-          font-size: 0.85rem;
+          border: 2px solid var(--border-color);
+          padding: 0.3rem 0.5rem;
+          font-size: 0.82rem;
           font-weight: 600;
-          border-radius: var(--radius-sm);
+          border-radius: 3px;
           color: var(--text-primary);
           cursor: pointer;
+          box-shadow: var(--shadow-sm);
+          min-height: unset;
+          font-family: var(--font-body);
         }
 
         .lang-select-box:hover {
-          border-color: var(--primary);
+          transform: translate(-1px, -1px);
+          box-shadow: var(--shadow-md);
         }
 
         .theme-toggle {
-          width: 38px;
-          height: 38px;
-          border-radius: var(--radius-sm);
-          border: 1px solid var(--border-color);
+          width: 36px;
+          height: 36px;
+          border-radius: 3px;
+          border: 2px solid var(--border-color);
           display: flex;
           align-items: center;
           justify-content: center;
           color: var(--text-secondary);
+          background: var(--bg-tertiary);
+          box-shadow: var(--shadow-sm);
+          min-height: unset;
+          transition: transform var(--transition-fast), box-shadow var(--transition-fast);
         }
 
         .theme-toggle:hover {
-          background: var(--bg-tertiary);
+          transform: translate(-1px, -1px);
+          box-shadow: var(--shadow-md);
           color: var(--text-primary);
         }
 
         .mobile-menu-toggle {
           display: none;
-          width: 38px;
-          height: 38px;
-          border-radius: var(--radius-sm);
-          border: 1px solid var(--border-color);
+          width: 36px;
+          height: 36px;
+          border-radius: 3px;
+          border: 2px solid var(--border-color);
           align-items: center;
           justify-content: center;
           color: var(--text-secondary);
+          background: var(--bg-tertiary);
+          box-shadow: var(--shadow-sm);
+          min-height: unset;
         }
 
         @media (max-width: 900px) {
-          .mobile-menu-toggle {
-            display: flex;
-          }
+          .mobile-menu-toggle { display: flex; }
         }
 
         .mobile-nav-drawer {
           display: none;
           flex-direction: column;
           background: var(--bg-secondary);
-          border-bottom: 1px solid var(--border-color);
-          padding: 1rem;
+          border-bottom: 2px solid var(--border-color);
+          padding: 0.75rem 1rem;
           position: fixed;
-          top: 70px;
+          top: 64px;
           left: 0;
           right: 0;
-          box-shadow: var(--shadow-md);
+          box-shadow: var(--shadow-lg);
           z-index: 99;
-          animation: slideDown 0.25s ease-out;
+          animation: slideDown 0.2s ease-out;
         }
 
         @media (max-width: 900px) {
-          .mobile-nav-drawer {
-            display: flex;
-          }
+          .mobile-nav-drawer { display: flex; }
         }
 
         @keyframes slideDown {
-          from { transform: translateY(-10px); opacity: 0; }
+          from { transform: translateY(-8px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
 
         .mobile-nav-link {
           text-align: left;
-          padding: 0.75rem 1rem;
-          font-size: 0.95rem;
+          padding: 0.7rem 0.75rem;
+          font-size: 0.92rem;
           font-weight: 600;
           color: var(--text-secondary);
-          border-radius: var(--radius-sm);
+          border-radius: 3px;
           width: 100%;
+          font-family: var(--font-body);
+          min-height: unset;
         }
 
-        .mobile-nav-link.active, .mobile-nav-link:hover {
-          color: var(--primary);
-          background: var(--primary-light);
+        .mobile-nav-link.active {
+          color: var(--saffron);
+          background: var(--saffron-light);
+        }
+
+        .mobile-nav-link:hover {
+          color: var(--text-primary);
+          background: var(--bg-tertiary);
         }
 
         @media (max-width: 480px) {
-          .header-container {
-            height: 60px;
-          }
-          .logo-subtitle {
-            display: none;
-          }
-          .logo-title {
-            font-size: 1.15rem;
-          }
-          .lang-select-box {
-            font-size: 0.78rem;
-            padding: 0.3rem 0.4rem;
-          }
-          .theme-toggle, .mobile-menu-toggle {
-            width: 34px;
-            height: 34px;
-          }
-          .mobile-nav-drawer {
-            top: 60px;
-          }
-          .header-actions {
-            gap: 0.4rem;
-          }
+          .header-container { height: 56px; }
+          .logo-title { font-size: 1.15rem; }
+          .lang-select-box { font-size: 0.75rem; padding: 0.25rem 0.35rem; }
+          .theme-toggle, .mobile-menu-toggle { width: 32px; height: 32px; }
+          .mobile-nav-drawer { top: 56px; }
+          .header-actions { gap: 0.35rem; }
         }
       `}</style>
     </header>

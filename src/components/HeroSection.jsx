@@ -174,112 +174,108 @@ export default function HeroSection({ onSearch, onStartWizard, totalSchemesCount
   return (
     <section className="hero-section animate-fade-up">
       <div className="container hero-centered-layout">
-        
-        {/* Centered Heading */}
+
+        {/* LEFT — Editorial heading + CTA */}
         <div className="hero-header-content">
+          <div className="hero-badge">
+            <span className="dot-pulse-saffron"></span>
+            {totalSchemesCount}+ Schemes indexed
+          </div>
+
           <h1 className="hero-title">
-            Government Schemes,<br />
-            <span className="gradient-text-saffron">found in seconds.</span>
+            ₹4.2 lakh crore in<br />
+            welfare benefits.<br />
+            <em>Yours is in here.</em>
           </h1>
 
           <p className="hero-subtitle">
-            SchemeSense indexes {totalSchemesCount}+ central and state welfare programs. Enter your profile once — see every scheme you qualify for, what documents you need, and how to apply directly.
+            Most government schemes go unclaimed — not because people don't qualify, but because no one told them they did. SchemeSense cross-matches {totalSchemesCount}+ central and state programs against your profile in seconds.
           </p>
-        </div>
 
-        {/* The Omnibar (Search Panel) */}
-        <div className="omnibar-container hover-lift" ref={suggestionRef}>
-          <form onSubmit={handleSearchSubmit} className="omnibar-form">
-            <div className="omnibar-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          {/* Actions live in left col */}
+          <div className="hero-actions-container">
+            <button onClick={onStartWizard} className="btn-saffron wizard-cta-btn">
+              <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
               </svg>
-            </div>
-            <input
-              type="text"
-              className="omnibar-input"
-              placeholder={t.searchPlaceholder}
-              value={searchQuery}
-              onChange={handleInputChange}
-              onFocus={() => {
-                if (searchQuery.trim().length > 0) setShowSuggestions(true);
-              }}
-            />
-            
-            {/* Voice Search Button */}
-            <button
-              type="button"
-              className={`voice-search-btn ${isListening ? 'listening' : ''}`}
-              onClick={startListening}
-              title={isListening ? "Listening..." : "Voice Search"}
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill={isListening ? "var(--saffron)" : "none"} stroke={isListening ? "var(--saffron)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                <line x1="12" y1="19" x2="12" y2="23"></line>
-                <line x1="8" y1="23" x2="16" y2="23"></line>
-              </svg>
-              {isListening && <span className="listening-pulse"></span>}
+              {t.startWizardBtn}
             </button>
-
-            <button type="submit" className="btn-primary omnibar-btn">
-              {t.searchBtn}
+            <span className="action-divider">or</span>
+            <button onClick={() => onSearch('')} className="browse-all-btn">
+              {t.browseAllBtn}
             </button>
-          </form>
-
-          {/* Autocomplete Suggestions */}
-          {showSuggestions && suggestions.length > 0 && (
-            <div className="omnibar-dropdown animate-scale-in">
-              <div className="suggestions-header">Popular Searches</div>
-              {suggestions.map((item, idx) => (
-                <div 
-                  key={idx} 
-                  className="suggestion-item"
-                  onClick={() => handleSuggestionClick(item)}
-                >
-                  <span className="suggestion-label">{item.label}</span>
-                  <span className="suggestion-category">{item.category}</span>
-                </div>
-              ))}
-            </div>
-          )}
+          </div>
         </div>
 
-        {/* Dual Actions */}
-        <div className="hero-actions-container">
-          <button onClick={onStartWizard} className="btn-saffron wizard-cta-btn">
-            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-            </svg>
-            {t.startWizardBtn}
-          </button>
-          <span className="action-divider">or</span>
-          <button onClick={() => onSearch('')} className="btn-secondary browse-all-btn hover-lift">
-            {t.browseAllBtn}
-          </button>
-        </div>
+        {/* RIGHT — Search bar + stats block */}
+        <div className="hero-right-col">
+          {/* Omnibar integrated into card */}
+          <div className="omnibar-container" ref={suggestionRef}>
+            <form onSubmit={handleSearchSubmit} className="omnibar-form">
+              <div className="omnibar-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </div>
+              <input
+                type="text"
+                className="omnibar-input"
+                placeholder={t.searchPlaceholder}
+                value={searchQuery}
+                onChange={handleInputChange}
+                onFocus={() => { if (searchQuery.trim().length > 0) setShowSuggestions(true); }}
+              />
+              <button
+                type="button"
+                className={`voice-search-btn ${isListening ? 'listening' : ''}`}
+                onClick={startListening}
+                title={isListening ? 'Listening...' : 'Voice Search'}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill={isListening ? 'var(--saffron)' : 'none'} stroke={isListening ? 'var(--saffron)' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <line x1="12" y1="19" x2="12" y2="23"></line>
+                  <line x1="8" y1="23" x2="16" y2="23"></line>
+                </svg>
+                {isListening && <span className="listening-pulse"></span>}
+              </button>
+              <button type="submit" className="btn-saffron omnibar-btn">
+                {t.searchBtn}
+              </button>
+            </form>
 
-        {/* Real Scheme Stats */}
-        <div className="impact-counter-wrapper">
-          <div className="impact-stat">
-            <span className="impact-number">{totalSchemesCount}</span>
-            <span className="impact-label">Schemes indexed</span>
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="omnibar-dropdown animate-scale-in">
+                <div className="suggestions-header">Popular Searches</div>
+                {suggestions.map((item, idx) => (
+                  <div key={idx} className="suggestion-item" onClick={() => handleSuggestionClick(item)}>
+                    <span className="suggestion-label">{item.label}</span>
+                    <span className="suggestion-category">{item.category}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-          <div className="impact-divider"></div>
-          <div className="impact-stat">
-            <span className="impact-number">6</span>
-            <span className="impact-label">Welfare categories</span>
-          </div>
-          <div className="impact-divider"></div>
-          <div className="impact-stat">
-            <span className="impact-number">28+</span>
-            <span className="impact-label">States &amp; UTs covered</span>
-          </div>
-          <div className="impact-divider"></div>
-          <div className="impact-stat">
-            <span className="impact-number">3</span>
-            <span className="impact-label">Languages supported</span>
+
+          {/* Stats as a clean list */}
+          <div className="impact-counter-wrapper">
+            <div className="impact-stat">
+              <span className="impact-label">Schemes indexed</span>
+              <span className="impact-number">{totalSchemesCount}</span>
+            </div>
+            <div className="impact-stat">
+              <span className="impact-label">Welfare categories</span>
+              <span className="impact-number">6</span>
+            </div>
+            <div className="impact-stat">
+              <span className="impact-label">States &amp; UTs covered</span>
+              <span className="impact-number">28+</span>
+            </div>
+            <div className="impact-stat">
+              <span className="impact-label">Languages supported</span>
+              <span className="impact-number">3</span>
+            </div>
           </div>
         </div>
 
