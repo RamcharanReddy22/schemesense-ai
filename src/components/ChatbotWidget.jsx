@@ -20,7 +20,7 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
 
   // Auto-ping backend on mount to detect if Groq is live
   useEffect(() => {
-    const API_URL = import.meta.env.VITE_RAG_API_URL || 'http://localhost:8000';
+    const API_URL = import.meta.env.VITE_RAG_API_URL || 'https://schemesense-ai.onrender.com';
     fetch(`${API_URL}/`)
       .then(r => r.json())
       .then(data => setBackendOnline(data.groq_enabled === true))
@@ -63,7 +63,7 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
       if (lower.includes('ऋण') || lower.includes('व्यवसाय') || lower.includes('వ్యాపారం')) backendQuery += ' business loan';
       if (lower.includes('पात्र') || lower.includes('అర్హత')) backendQuery += ' am i eligible for pm kisan';
 
-      const API_URL = import.meta.env.VITE_RAG_API_URL || 'http://localhost:8000';
+      const API_URL = import.meta.env.VITE_RAG_API_URL || 'https://schemesense-ai.onrender.com';
       const response = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -134,7 +134,7 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
   const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (!files.length) return;
-    const API_URL = import.meta.env.VITE_RAG_API_URL || 'http://localhost:8000';
+    const API_URL = import.meta.env.VITE_RAG_API_URL || 'https://schemesense-ai.onrender.com';
 
     for (const file of files) {
       setIsUploading(true);
@@ -182,7 +182,7 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
 
   const handleSetGroqKey = async () => {
     if (!groqKey.trim()) return;
-    const API_URL = import.meta.env.VITE_RAG_API_URL || 'http://localhost:8000';
+    const API_URL = import.meta.env.VITE_RAG_API_URL || 'https://schemesense-ai.onrender.com';
     try {
       await fetch(`${API_URL}/api/set-groq-key`, {
         method: 'POST',
