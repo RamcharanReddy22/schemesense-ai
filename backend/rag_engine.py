@@ -150,8 +150,12 @@ class RAGEngine:
         self.index_schemes()
 
     def load_schemes(self):
-        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        json_path = os.path.join(base_path, 'src', 'data', 'schemes.json')
+        # First try: schemes.json bundled alongside this script (for Render deploy)
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        json_path = os.path.join(base_dir, 'schemes.json')
+        # Second try: monorepo layout src/data/schemes.json (for local dev)
+        if not os.path.exists(json_path):
+            json_path = os.path.join(base_dir, '..', 'src', 'data', 'schemes.json')
         try:
             with open(json_path, 'r', encoding='utf-8') as f:
                 self.schemes = json.load(f)
