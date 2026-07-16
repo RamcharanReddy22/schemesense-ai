@@ -9,7 +9,8 @@
     "dev:backend": "uvicorn --app-dir backend main:app --host 0.0.0.0 --port 8001 --reload --reload-dir backend",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
@@ -25,6 +26,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
     "concurrently": "^10.0.3",
+    "gh-pages": "^6.3.0",
     "md-to-pdf": "^5.2.5",
     "oxlint": "^1.71.0",
     "vite": "^8.1.1",
