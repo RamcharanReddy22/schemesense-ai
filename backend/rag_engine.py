@@ -135,7 +135,7 @@ def call_groq(prompt: str, api_key: str) -> str:
         return chat_completion.choices[0].message.content
     except Exception as e:
         print(f"[Groq ERROR] {e}")
-        return None
+        return f"GROQ_ERROR: {str(e)}"
 
 
 # ─── Main RAG Engine ──────────────────────────────────────────────────────────
