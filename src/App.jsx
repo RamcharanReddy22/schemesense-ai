@@ -11,12 +11,21 @@ import ApplyPortal from './components/ApplyPortal';
 import ChatbotWidget from './components/ChatbotWidget';
 import AnalyticsDashboard from './components/AnalyticsDashboard';
 import IndiaMap from './components/IndiaMap';
+import LifeEventBundler from './components/LifeEventBundler';
+import OfflineBanner, { useOnlineStatus } from './components/OfflineBanner';
+import { AlertBanner, useSchemeAlerts } from './components/SchemeAlerts';
 import { schemes } from './data/schemesData';
 import { translations } from './data/localization';
 
 export default function App() {
   const [currentView, setCurrentView] = useState('home');
   const [lang, setLang] = useState(() => localStorage.getItem('lang') || 'en');
+
+  // Feature 2: Offline detection
+  const { isOnline, justCameOnline } = useOnlineStatus();
+
+  // Feature 3: Proactive scheme alerts
+  const { urgentAlerts, dismissAlert } = useSchemeAlerts();
   
   const [savedSchemes, setSavedSchemes] = useState(() => {
     const saved = localStorage.getItem('savedSchemes');
@@ -258,8 +267,20 @@ export default function App() {
         lang={lang}
         setLang={handleLangChange}
       />
+      {/* Feature 2: Offline Banner */}
+      <OfflineBanner isOnline={isOnline} justCameOnline={justCameOnline} lang={lang} />
+
+      {/* Feature 3: Proactive Deadline Alert Banner */}
+      <AlertBanner
+        urgentAlerts={urgentAlerts}
+        dismissAlert={dismissAlert}
+        onOpenScheme={(scheme) => setSelectedSchemeDetail(scheme)}
+        schemes={schemes}
+        lang={lang}
+      />
 
       {/* Global Toast Alert */}
+
       {toast && (
         <div className={`toast-notification ${toast.type}`}>
           <div className="toast-content">
@@ -282,6 +303,12 @@ export default function App() {
               lang={lang}
               schemes={schemes}
               onSelectScheme={(scheme) => setSelectedSchemeDetail(scheme)}
+            />
+
+            {/* Feature 6: Life-event bundler */}
+            <LifeEventBundler
+              onSearch={handleSearchKeyword}
+              lang={lang}
             />
             
             <div className="container" style={{ margin: '4rem auto 2rem' }}>

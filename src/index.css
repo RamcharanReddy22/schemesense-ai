@@ -6,10 +6,10 @@
   --font-heading: 'Noto Sans', Arial, sans-serif;
 
   --radius-sm:   2px;
-  --radius-md:   3px;
-  --radius-lg:   4px;
-  --radius-xl:   4px;
-  --radius-full: 3px;
+  --radius-md:   2px;
+  --radius-lg:   2px;
+  --radius-xl:   2px;
+  --radius-full: 2px;
 
   --transition-fast:   0.1s ease;
   --transition-normal: 0.2s ease;
@@ -35,10 +35,10 @@
   --gov-link-hover: #004499;
 
   /* Subtle formal shadows */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.10);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.10);
   --shadow-md: 0 2px 6px rgba(0,0,0,0.13);
-  --shadow-lg: 0 4px 12px rgba(0,0,0,0.16);
-  --shadow-xl: 0 8px 24px rgba(0,0,0,0.18);
+  --shadow-lg: 0 2px 12px rgba(0,0,0,0.16);
+  --shadow-xl: 0 8px 22px rgba(0,0,0,0.18);
   --shadow-glow: 0 2px 6px rgba(0,0,0,0.13);
 
   /* Tricolor accents — used sparingly */
@@ -62,47 +62,7 @@
   --gradient-text:     var(--text-primary);
 }
 
-[data-theme='dark'] {
-  --bg-primary:   #1C2030;
-  --bg-secondary: #242838;
-  --bg-tertiary:  #2E3448;
-  --text-primary:   #E0E4EE;
-  --text-secondary: #9AA0B8;
-  --text-muted:     #6A7080;
-  --border-color: #3A4060;
-  --border-light: #303050;
-  --border-glass: rgba(255,255,255,0.06);
 
-  --gov-navy:       #1E4A90;
-  --gov-navy-light: #2860B0;
-  --gov-navy-dark:  #122E60;
-  --gov-link:       #6699EE;
-  --gov-link-hover: #88AAFF;
-
-  --shadow-sm: 0 1px 4px rgba(0,0,0,0.35);
-  --shadow-md: 0 2px 8px rgba(0,0,0,0.45);
-  --shadow-lg: 0 4px 16px rgba(0,0,0,0.55);
-  --shadow-xl: 0 8px 24px rgba(0,0,0,0.65);
-
-  --primary:       #3A70C0;
-  --primary-hover: #4A80D0;
-  --primary-light: rgba(58,112,192,0.15);
-
-  --saffron:       #FF9933;
-  --saffron-hover: #FFB060;
-  --saffron-light: rgba(255,153,51,0.12);
-
-  --emerald:       #22A010;
-  --emerald-hover: #38C028;
-  --emerald-light: rgba(34,160,16,0.12);
-
-  --ashoka-blue: #6699EE;
-
-  --gradient-primary: var(--primary);
-  --gradient-saffron:  var(--saffron);
-  --gradient-emerald:  var(--emerald);
-  --gradient-text:     var(--text-primary);
-}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -165,7 +125,7 @@ button { cursor: pointer; border: none; background: none; transition: all var(--
 .glass-panel {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border-radius: 2px;
   box-shadow: var(--shadow-sm);
 }
 
