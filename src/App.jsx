@@ -14,6 +14,7 @@ import IndiaMap from './components/IndiaMap';
 import LifeEventBundler from './components/LifeEventBundler';
 import OfflineBanner, { useOnlineStatus } from './components/OfflineBanner';
 import { AlertBanner, useSchemeAlerts } from './components/SchemeAlerts';
+import DocumentVault from './components/DocumentVault';
 import { schemes } from './data/schemesData';
 import { translations } from './data/localization';
 
@@ -36,6 +37,25 @@ export default function App() {
     const apps = localStorage.getItem('submittedApplications');
     return apps ? JSON.parse(apps) : [];
   });
+
+  // WhatsApp Alerts subscriptions
+  const [whatsappAlerts, setWhatsappAlerts] = useState(() => {
+    const saved = localStorage.getItem('whatsappAlerts');
+    return saved ? JSON.parse(saved) : {};
+  });
+  const [whatsappToast, setWhatsappToast] = useState(null);
+
+  const toggleWhatsappAlert = (schemeId, schemeTitle) => {
+    const newAlerts = { ...whatsappAlerts, [schemeId]: !whatsappAlerts[schemeId] };
+    setWhatsappAlerts(newAlerts);
+    localStorage.setItem('whatsappAlerts', JSON.stringify(newAlerts));
+    if (newAlerts[schemeId]) {
+      setWhatsappToast(`✅ WhatsApp alert activated for "${schemeTitle}"! You'll get a reminder 7 days before the deadline.`);
+    } else {
+      setWhatsappToast(`🔕 Alert removed for "${schemeTitle}".`);
+    }
+    setTimeout(() => setWhatsappToast(null), 4000);
+  };
 
   // Global Toast Notifications
   const [toast, setToast] = useState(null);
@@ -479,8 +499,67 @@ export default function App() {
                 )}
               </div>
             </div>
+
+            {/* Document Vault Section */}
+            <div style={{ marginTop: '3rem', borderTop: '1.5px solid var(--border-color)', paddingTop: '2.5rem' }}>
+              <DocumentVault />
+            </div>
+
+            {/* WhatsApp Alerts Section */}
+            <div style={{ marginTop: '3rem', borderTop: '1.5px solid var(--border-color)', paddingTop: '2.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                <span style={{ fontSize: '2rem' }}>💬</span>
+                <div>
+                  <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>WhatsApp Deadline Alerts</h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', margin: '0.2rem 0 0' }}>Subscribe to get proactive reminders 7 days before a scheme closes. Never miss out again.</p>
+                </div>
+              </div>
+              {whatsappToast && (
+                <div style={{ background: '#25D366', color: 'white', borderRadius: '12px', padding: '0.75rem 1.25rem', marginBottom: '1rem', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  {whatsappToast}
+                </div>
+              )}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
+                {savedSchemes.length === 0 ? (
+                  <div className="empty-dashboard-state">
+                    <p>Save some schemes first to set up WhatsApp deadline alerts for them.</p>
+                  </div>
+                ) : (
+                  savedSchemes.map(scheme => (
+                    <div key={scheme.id} style={{ background: 'var(--bg-secondary)', border: '1.5px solid var(--border-color)', borderRadius: '12px', padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ fontWeight: 700, fontSize: '0.9rem', margin: '0 0 0.2rem', color: 'var(--text-primary)' }}>{scheme.title}</p>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: 0 }}>{scheme.category}</p>
+                      </div>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', flexShrink: 0 }}>
+                        <span style={{ fontSize: '0.78rem', fontWeight: 600, color: whatsappAlerts[scheme.id] ? '#16a34a' : 'var(--text-muted)' }}>
+                          {whatsappAlerts[scheme.id] ? '🟢 On' : '⚫ Off'}
+                        </span>
+                        <div
+                          onClick={() => toggleWhatsappAlert(scheme.id, scheme.title)}
+                          style={{
+                            width: '44px', height: '24px', borderRadius: '12px', cursor: 'pointer',
+                            background: whatsappAlerts[scheme.id] ? '#25D366' : '#cbd5e1',
+                            position: 'relative', transition: 'background 0.2s'
+                          }}
+                        >
+                          <div style={{
+                            width: '18px', height: '18px', borderRadius: '50%', background: 'white',
+                            position: 'absolute', top: '3px',
+                            left: whatsappAlerts[scheme.id] ? '23px' : '3px',
+                            transition: 'left 0.2s', boxShadow: '0 1px 4px rgba(0,0,0,0.2)'
+                          }} />
+                        </div>
+                      </label>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+
           </div>
         )}
+
       </main>
 
       <Footer setCurrentView={setCurrentView} lang={lang} />

@@ -1,0 +1,245 @@
+/* ===========================
+   Document Vault Styles
+   =========================== */
+
+.vault-container {
+  padding: 2rem 0;
+  position: relative;
+  font-family: var(--font-body, 'Inter', sans-serif);
+}
+
+.vault-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.vault-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.vault-shield-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.vault-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 0.25rem;
+  color: var(--text-primary, #111827);
+}
+
+.vault-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary, #64748b);
+  margin: 0;
+  max-width: 480px;
+}
+
+.vault-stats-badge {
+  background: linear-gradient(135deg, #1e40af, #7c3aed);
+  color: white;
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.vault-count {
+  display: block;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.vault-count-label {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.vault-progress-bar-wrap {
+  height: 6px;
+  background: var(--border-color, #e2e8f0);
+  border-radius: 999px;
+  margin-bottom: 1.75rem;
+  overflow: hidden;
+}
+
+.vault-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.vault-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.vault-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--bg-secondary, #f8fafc);
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.vault-card:hover {
+  border-color: #7c3aed;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.1);
+}
+
+.vault-card-stored {
+  border-color: #10b98166;
+  background: #f0fdf4;
+}
+
+.vault-card-icon {
+  font-size: 1.5rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.vault-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.vault-card-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+  margin-bottom: 0.2rem;
+}
+
+.vault-card-meta {
+  display: block;
+  font-size: 0.75rem;
+  color: #16a34a;
+  font-weight: 500;
+}
+
+.vault-card-empty {
+  color: var(--text-muted, #94a3b8);
+}
+
+.vault-card-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.vault-btn {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 0.7rem;
+  transition: all 0.15s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.vault-btn-upload {
+  background: linear-gradient(135deg, #3b82f6, #7c3aed);
+  color: white;
+}
+
+.vault-btn-upload:hover {
+  opacity: 0.85;
+}
+
+.vault-btn-view {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.vault-btn-view:hover {
+  background: #bae6fd;
+}
+
+.vault-btn-delete {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.vault-btn-delete:hover {
+  background: #fecaca;
+}
+
+.vault-spinner {
+  font-size: 1.1rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.vault-complete-banner {
+  margin-top: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  border: 1.5px solid #6ee7b7;
+  border-radius: 12px;
+  font-weight: 700;
+  color: #064e3b;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.vault-toast {
+  position: fixed;
+  bottom: 5.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 9999;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  animation: slide-up 0.3s ease;
+  white-space: nowrap;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.vault-toast-success {
+  background: #10b981;
+  color: white;
+}
+
+.vault-toast-error {
+  background: #ef4444;
+  color: white;
+}
+
+.vault-toast-info {
+  background: #3b82f6;
+  color: white;
+}

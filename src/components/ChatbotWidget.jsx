@@ -16,6 +16,10 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
   const [showUploadPanel, setShowUploadPanel] = useState(false);
   const [backendOnline, setBackendOnline] = useState(false); // auto-detected
 
+  // Speech-to-Text State
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
+
   const t = translations[lang] || translations.en;
 
   // Auto-ping backend on mount to detect if Groq is live
@@ -25,6 +29,29 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
       .then(r => r.json())
       .then(data => setBackendOnline(data.groq_enabled === true))
       .catch(() => setBackendOnline(false));
+
+    // Initialize Web Speech API
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      
+      recognitionRef.current.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setInputValue(prev => prev ? prev + ' ' + transcript : transcript);
+        setIsListening(false);
+      };
+      
+      recognitionRef.current.onerror = (event) => {
+        console.error('Speech recognition error', event.error);
+        setIsListening(false);
+      };
+      
+      recognitionRef.current.onend = () => {
+        setIsListening(false);
+      };
+    }
   }, []);
 
   // Re-greet the user when language changes
@@ -129,6 +156,22 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
     };
     setMessages(prev => [...prev, userMsg]);
     triggerBotResponse(chipText);
+  };
+
+  const handleVoiceClick = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    } else {
+      if (recognitionRef.current) {
+        // Set language based on current UI language
+        recognitionRef.current.lang = lang === 'hi' ? 'hi-IN' : lang === 'te' ? 'te-IN' : 'en-IN';
+        recognitionRef.current.start();
+        setIsListening(true);
+      } else {
+        alert("Your browser does not support Voice input. Please use Chrome or Edge.");
+      }
+    }
   };
 
   // File Upload Handler
@@ -444,9 +487,25 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
 
           {/* Form input */}
           <form onSubmit={handleSendMessage} className="chat-input-bar">
+            <button 
+              type="button" 
+              className={`chat-voice-btn ${isListening ? 'listening' : ''}`}
+              onClick={handleVoiceClick}
+              title={isListening ? "Listening..." : "Click to speak"}
+            >
+              {isListening ? (
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm5 10v1a5 5 0 0 1-10 0v-1H5v1a7 7 0 0 0 6 6.92V22h2v-3.08A7 7 0 0 0 19 13v-1h-2z" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/>
+                </svg>
+              )}
+            </button>
             <input 
               type="text" 
-              placeholder={t.botPlaceholder}
+              placeholder={isListening ? "Listening..." : t.botPlaceholder}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className="chat-input-field"
