@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Joyride, STATUS } from 'react-joyride';
 import Header from './components/Header';
-import Footer from './components/Footer';
+import Login from './components/Login';
 import HeroSection from './components/HeroSection';
 import CategoriesGrid from './components/CategoriesGrid';
 import EligibilityWizard from './components/EligibilityWizard';
@@ -19,7 +19,16 @@ import { schemes } from './data/schemesData';
 import { translations } from './data/localization';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('home');
+  // Login state
+  const handleLogin = (loggedUser) => {
+    setUser(loggedUser);
+    setCurrentView('home');
+  };
+  const [currentView, setCurrentView] = useState('login');
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem('authUser');
+    return stored ? JSON.parse(stored) : null;
+  });
   const [lang, setLang] = useState(() => localStorage.getItem('lang') || 'en');
 
   // Feature 2: Offline detection
@@ -280,7 +289,47 @@ export default function App() {
           skip: 'Skip Tour',
         }}
       />
-      <Header 
+      {!user ? (
+        <Login onLogin={handleLogin} />
+      ) : (
+        <>
+          <Header
+            currentView={currentView}
+            setCurrentView={setCurrentView}
+            savedCount={savedSchemes.length}
+            lang={lang}
+            setLang={handleLangChange}
+          />
+          {/* Feature 2: Offline Banner */}
+          <OfflineBanner isOnline={isOnline} justCameOnline={justCameOnline} lang={lang} />
+
+          {/* Feature 3: Proactive Deadline Alert Banner */}
+          <AlertBanner
+            urgentAlerts={urgentAlerts}
+            dismissAlert={dismissAlert}
+            onOpenScheme={(scheme) => setSelectedSchemeDetail(scheme)}
+            schemes={schemes}
+            lang={lang}
+          />
+
+          {/* Global Toast Notification */}
+          {toast && (
+            <div className={`toast-notification ${toast.type}`}>
+              <div className="toast-content">
+                <span className="toast-icon">
+                  {toast.type === 'success' ? '✓' : 'ℹ'}
+                </span>
+                <span className="toast-message">{toast.message}</span>
+              </div>
+              <button className="toast-close" onClick={() => setToast(null)}>×</button>
+            </div>
+          )}
+
+          <main className="main-content-area">
+            {/* ... rest of existing content ... */}
+          </main>
+        </>
+      )} 
         currentView={currentView} 
         setCurrentView={setCurrentView} 
         savedCount={savedSchemes.length}
