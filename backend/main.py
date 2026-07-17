@@ -71,6 +71,24 @@ def chat(request: ChatRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/api/chat", response_model=ChatResponse)
+def chat_get(query: str, lang: str = "en", use_uploaded_docs: bool = False):
+    if not query.strip():
+        raise HTTPException(status_code=400, detail="Query cannot be empty")
+    try:
+        result = rag_engine.generate_response(
+            query=query,
+            lang=lang,
+            use_uploaded_docs=use_uploaded_docs
+        )
+        return ChatResponse(
+            response=result["response"],
+            matches=result.get("matches", []),
+            source=result.get("source", "schemes_db")
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/api/upload")
 async def upload_file(file: UploadFile = File(...)):

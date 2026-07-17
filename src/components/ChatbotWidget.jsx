@@ -64,10 +64,11 @@ export default function ChatbotWidget({ schemes, onSelectScheme, onStartWizard, 
       if (lower.includes('पात्र') || lower.includes('అర్హత')) backendQuery += ' am i eligible for pm kisan';
 
       const API_URL = import.meta.env.VITE_RAG_API_URL || 'https://schemesense-ai.onrender.com';
-      const response = await fetch(`${API_URL}/api/chat?v=2`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: backendQuery, lang: lang, use_uploaded_docs: useDocMode && uploadedFiles.length > 0 })
+      const useDocs = useDocMode && uploadedFiles.length > 0;
+      const getUrl = `${API_URL}/api/chat?query=${encodeURIComponent(backendQuery)}&lang=${lang}&use_uploaded_docs=${useDocs}&v=3`;
+      
+      const response = await fetch(getUrl, {
+        method: 'GET'
       });
 
       if (!response.ok) {
